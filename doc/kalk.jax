@@ -1,0 +1,129 @@
+*kalk.txt*	日本語ヘルプ
+
+Version : 0.1.0
+Author  : monaqa <mogassy@yahoo.co.jp>
+License : MIT license  {{{
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+==============================================================================
+目次						*kalk-contents*
+
+概要				|kalk-introduction|
+使い方				|kalk-usage|
+インターフェイス		|kalk-interface|
+  変数				  |kalk-variables|
+  キーマッピング		  |kalk-key-mappings|
+  関数				  |kalk-functions|
+TODO				|kalk-todo|
+更新履歴			|kalk-changelog|
+
+
+==============================================================================
+概要						*kalk-introduction*
+
+*kalk* はバッファ上にある数値の編集を楽に行うプラグインです．
+既存の Vim でも expression レジスタなどを用いて編集を行うことができましたが，
+より単純かつ直感的な操作で編集できるようになります．
+
+最新版:
+https://github.com/monaqa/kalk.vim
+
+==============================================================================
+使い方						*kalk-usage*
+
+
+kalk プラグインの機能を用いるには，以下のようにマッピングを割り当てます: >
+
+  vmap <Space>a <Plug>(kalk-visual-apply)
+  vmap <Space>r <Plug>(kalk-visual-repeat)
+<
+
+マップするキーは好きなように決めることができます．
+
+==============================================================================
+インターフェイス				*kalk-interface*
+
+
+------------------------------------------------------------------------------
+変数						*kalk-variables*
+
+g:default_lambda_body				*g:default_lambda_body*
+	既定値: = "x"
+	<Plug>(kalk-visual-repeat) で用いられる lambda 関数の返り値.
+	ただし，入力引数は x とする．
+	<Plug>(kalk-visual-apply) で上書きされる．
+
+------------------------------------------------------------------------------
+キーマッピング					*kalk-key-mappings*
+
+VISUAL モードで機能するマッピングがいくつか定義されています．
+vimrc に以下のように設定することで，自身の好きなキーに機能を割り当てられます: >
+
+  vmap <Space>a <Plug>(kalk-visual-apply)
+  vmap <Space>r <Plug>(kalk-visual-repeat)
+<
+
+<Plug>(kalk-visual-apply)			*<Plug>(kalk-visual-apply)*
+	有効モード: ビジュアル セレクト
+	選択された数字に Lambda 式を適用した数を計算し，
+	選択箇所を計算後の数字で置き換える．
+	キーを押下した後に Lambda 式を設定するプロンプトが表示される．
+	たとえばバッファ上に書かれた 30 という数字を選択し，
+	ラムダ式としてx -> x * x を指定すれば，
+	30 であった箇所が 900 に変化してバッファに書き込まれる．
+
+<Plug>(kalk-visual-repeat)			*<Plug>(kalk-visual-repeat)*
+	有効モード: ビジュアル セレクト
+	直前に <Plug>(kalk-visual-apply) で行った操作を繰り返す．
+	当然，結果は選択した数字に応じて変化する．
+	もし直前の <Plug>(kalk-visual-apply) で x -> x * x を指定した場合，
+	その状態で 13 という数字を選択して <Plug>(kalk-visual-repeat) を
+	実行することで， 13 は 169 という数字に変化する．
+
+
+------------------------------------------------------------------------------
+関数						*kalk-functions*
+
+under construction
+
+kalk#apply_lambda_to_visual_area()	*kalk#apply_lambda_to_visual_area()*
+	<Plug>(kalk-visual-apply) の内部実装．
+
+
+kalk#repeat_lambda_to_visual_area()	*kalk#repeat_lambda_to_visual_area()*
+	<Plug>(kalk-visual-repeat) の内部実装．
+
+
+==============================================================================
+TODO						*kalk-todo*
+
+- count 指定に対応
+- 数字の範囲を自動検出してノーマルモードから呼び出せるようにする
+- 出力のフォーマット指定
+
+==============================================================================
+更新履歴					*kalk-changelog*
+
+v0.1.0 (2020-02-08)~
+
+- helpfile の追加
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:
